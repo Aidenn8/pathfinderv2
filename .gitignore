@@ -1,0 +1,12 @@
+.DS_Store
+*.class
+target/
+
+# IDE metadata
+.idea/
+.classpath
+.project
+.settings/
+
+# Local logs
+*.log
