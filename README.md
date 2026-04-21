@@ -9,6 +9,26 @@ cd "Pathfinder-main 2/Pathfinder1"
 mvn compile exec:java
 ```
 
+## Build A Jar
+
+```bash
+cd "Pathfinder-main 2/Pathfinder1"
+mvn package
+java -jar target/Pathfinder.jar
+```
+
+Run the jar from the `Pathfinder1` folder so it can find the `wallsets/` maps.
+
+## Build A Mac App
+
+```bash
+cd "Pathfinder-main 2/Pathfinder1"
+./package-mac-app.sh
+open target/dist/Pathfinder.app
+```
+
+The `.app` includes a Java runtime, the Pathfinder jar, Processing, and the bundled wall maps.
+
 ## Controls
 
 Build mode:

@@ -16,6 +16,7 @@ import processing.core.PApplet;
 public class WallSet {
   final static int STACK_LIMIT = 200;
   final static String PATH_PREFIX = "wallsets/";
+  static File wallSetDirectory = new File(PATH_PREFIX);
 
   String name = null;
   int mods = 0;
@@ -111,8 +112,8 @@ public class WallSet {
   boolean save() {
     if (name == null) return false;
 
-    String path = PATH_PREFIX + name;
-    try (PrintWriter out = new PrintWriter(new File(path))) {
+    File path = fileFor(name);
+    try (PrintWriter out = new PrintWriter(path)) {
       out.println("[");
       int index = 0;
       for (Wall w : walls) {
@@ -160,7 +161,15 @@ public class WallSet {
   }
 
   static WallSet fromFile(String name) {
-    return fromFile(new File(PATH_PREFIX + name));
+    return fromFile(fileFor(name));
+  }
+
+  static void setDirectory(File directory) {
+    wallSetDirectory = directory;
+  }
+
+  static File fileFor(String name) {
+    return new File(wallSetDirectory, name);
   }
 
   static WallSet fromFile(File f) {

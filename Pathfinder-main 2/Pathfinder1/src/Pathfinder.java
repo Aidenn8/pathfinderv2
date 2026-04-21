@@ -62,7 +62,8 @@ public class Pathfinder extends PApplet {
   }
 
   void loadWallSets() {
-    File folder = new File("wallsets/");
+    File folder = locateWallSetDirectory();
+    WallSet.setDirectory(folder);
 
     if (folder.exists() && folder.isDirectory()) {
       File[] files = folder.listFiles();
@@ -93,6 +94,25 @@ public class Pathfinder extends PApplet {
     }
 
     if (wsList.isEmpty()) wsList.add(new WallSet());
+  }
+
+  File locateWallSetDirectory() {
+    File localFolder = new File("wallsets/");
+    if (localFolder.exists() && localFolder.isDirectory()) return localFolder;
+
+    try {
+      File codeSource = new File(Pathfinder.class.getProtectionDomain()
+          .getCodeSource().getLocation().toURI());
+      File appFolder = codeSource.isFile() ? codeSource.getParentFile() : codeSource;
+      File bundledFolder = new File(appFolder, "wallsets");
+      if (bundledFolder.exists() && bundledFolder.isDirectory()) return bundledFolder;
+    }
+    catch (Exception ex) {
+      System.err.println("Could not inspect app folder for wallsets.");
+      System.err.println("  " + ex.getMessage());
+    }
+
+    return localFolder;
   }
 
   int defaultWallSetIndex() {
